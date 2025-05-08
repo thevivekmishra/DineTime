@@ -1,45 +1,59 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import { View, Text } from 'react-native'
+import React, { useEffect } from 'react'
+import { Tabs } from 'expo-router'
+import { Colors } from "@/assets/Colors"
+import { Ionicons } from "@expo/vector-icons"
+import * as SystemUI from 'expo-system-ui';
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+const TabLayout = () => {
+    useEffect(() => {
+        SystemUI.setBackgroundColorAsync(Colors.SECONDARY); 
+    }, []);
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+    return (
+        <Tabs screenOptions={{
+            headerShown: false,
+            tabBarActiveTintColor: Colors.PRIMARY,
+            tabBarInactiveTintColor: Colors.dark.text,
+            tabBarStyle: {
+                backgroundColor: Colors.SECONDARY,
+                paddingBottom: 14,
+                height: 75
+            },
+            tabBarLabelStyle: {
+                fontSize: 12,
+                fontWeight: "bold"
+            }
+        }}>
+            <Tabs.Screen
+                name='home'
+                options={{
+                    title: "Home",
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name="home" size={24} color={color} />
+                    )
+                }}
+            />
+            <Tabs.Screen
+                name='history'
+                options={{
+                    title: "History",
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name="time" size={24} color={color} />
+                    )
+                }}
+            />
+            <Tabs.Screen
+                name='profile'
+                options={{
+                    title: "Profile",
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name="person-sharp" size={24} color={color} />
+                    )
+                }}
+            />
+        </Tabs>
+    )
 }
+
+export default TabLayout
