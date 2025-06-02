@@ -1,10 +1,34 @@
 import { View, Text, Image, ScrollView, ImageBackground, Platform, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BlurView } from 'expo-blur';
-import restaurants from '../../store/restaurants';
+import { restaurants } from '@/store/restaurants';
+import uploadData from '@/config/bulkUpload';
+import { collection, getDoc, getDocs, query } from 'firebase/firestore';
+import { db } from '@/config/firebaseConfig';
 
 const Home = () => {
+
+  // useEffect(() => {
+  //   uploadData();
+  // }, [])
+
+  // uploadData();
+
+  const [restaurants, setRestaurants] = useState([])
+
+  const getRestaurants = async () => {
+    const q = query(collection(db, "restaurants"));
+    const res = await getDocs(q);
+
+    res.forEach((item) => {
+      setRestaurants((prev) => [...prev, item.data()])
+    })
+  }
+
+  useEffect(()=>{
+    getRestaurants();
+  },[])
 
   const renderItem = ({ item }) => {
     // console.log(item); 
@@ -23,7 +47,7 @@ const Home = () => {
   };
 
   return (
-    <SafeAreaView style={[{ backgroundColor: "#2b2b2b" },Platform.OS == "android" && {paddingBottom:90}]}>
+    <SafeAreaView style={[{ backgroundColor: "#2b2b2b" }, Platform.OS == "android" && { paddingBottom: 90 }]}>
       <View className='flex items-center'>
         <View className='bg-[#5f5f5f] w-11/12 rounded-lg shadow-lg justify-between items-center p-1 m-3'>
           <View className='flex flex-row items-center justify-center text-center '>
