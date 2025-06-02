@@ -6,6 +6,7 @@ import { restaurants } from '@/store/restaurants';
 import uploadData from '@/config/bulkUpload';
 import { collection, getDoc, getDocs, query } from 'firebase/firestore';
 import { db } from '@/config/firebaseConfig';
+import { useRouter } from 'expo-router';
 
 const Home = () => {
 
@@ -30,10 +31,13 @@ const Home = () => {
     getRestaurants();
   },[])
 
+
+  const router = useRouter();
+
   const renderItem = ({ item }) => {
     // console.log(item); 
     return (
-      <TouchableOpacity className='bg-[#5f5f5f] max-h-86 max-w-xs justify-center rounded-lg p-4 mx-4 shadow-md'>
+      <TouchableOpacity onPress={()=>router.push(`/restaurant/${item.name}`)} className='bg-[#5f5f5f] max-h-86 max-w-xs justify-center rounded-lg p-4 mx-4 shadow-md'>
         <Image
           resizeMode='cover'
           source={{ uri: item.image }}
