@@ -1,4 +1,4 @@
-// import restaurants from "@/store/restaurants";
+// import {restaurants} from "@/store/restaurants";
 // import { collection, doc, setDoc } from "firebase/firestore";
 // import { db } from "./firebaseConfig";
 
@@ -8,7 +8,7 @@
 //     try {
 //         for (let i = 0; i < restaurantData.length; i++) {
 //             const restaurant = restaurantData[i];
-//             const docRef = doc(collection(db, "restaurants"), `restaurant ${i + 1}`);
+//             const docRef = doc(collection(db, "restaurants"), `restaurant_${i + 1}`);
 //             await setDoc(docRef, restaurant)
 //         }
 //         console.log("Restaurant data uploaded ")
@@ -23,7 +23,7 @@
 //go to home tab to upload the data via useEffect 
 
 
-// //uploading carouselImage 
+//uploading carouselImage 
 
 // import {carouselImages} from "@/store/restaurants";
 // import { collection, doc, setDoc } from "firebase/firestore";
@@ -35,7 +35,7 @@
 //     try {
 //         for (let i = 0; i < restaurantData.length; i++) {
 //             const restaurant = restaurantData[i];
-//             const docRef = doc(collection(db, "carsousel"), `carousel_${i + 1}`);
+//             const docRef = doc(collection(db, "carousel"), `carousel_${i + 1}`);
 //             await setDoc(docRef, restaurant)
 //         }
 //         console.log("Restaurant carouselImage data uploaded ")
@@ -50,24 +50,23 @@
 
 //uploading slots 
 
-import {slots} from "@/store/restaurants";
 import { collection, doc, setDoc } from "firebase/firestore";
+import { slots } from "../store/restaurants";
 import { db } from "./firebaseConfig";
 
-const restaurantData = slots
+const restaurantData = slots;
 
 const uploadData = async () => {
-    try {
-        for (let i = 0; i < restaurantData.length; i++) {
-            const restaurant = restaurantData[i];
-            const docRef = doc(collection(db, "slots"), `slot_${i + 1}`);
-            await setDoc(docRef, restaurant)
-        }
-        console.log("Slots data uploaded ")
+  try {
+    for (let i = 0; i < restaurantData.length; i++) {
+      const restaurant = restaurantData[i];
+      const docRef = doc(collection(db, "slots"), `slot_${i + 1}`);
+      await setDoc(docRef, restaurant);
     }
-    catch (error) {
-        console.log("Failed to upload slots data ", error);
-    }
-}
+    console.log("Data uploaded");
+  } catch (e) {
+    console.log("Error uploading data", e);
+  }
+};
 
-export default uploadData
+export default uploadData;

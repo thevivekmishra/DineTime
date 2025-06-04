@@ -51,7 +51,7 @@ const Home = () => {
   };
 
   return (
-    <SafeAreaView style={[{ backgroundColor: "#2b2b2b" }, Platform.OS == "android" && { paddingBottom: 90 }]}>
+<SafeAreaView style={[{ backgroundColor: "#2b2b2b", flex: 1 }, Platform.OS == "android" && { paddingBottom:1 }]}>
       <View className='flex items-center'>
         <View className='bg-[#5f5f5f] w-11/12 rounded-lg shadow-lg justify-between items-center p-1 m-3'>
           <View className='flex flex-row items-center justify-center text-center '>
